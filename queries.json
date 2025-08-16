@@ -4,6 +4,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "((page_title:\"Trinity College Dublin\" AND NOT resolved_domain:tcd.ie) OR (page_title:\"University College Dublin\" AND NOT resolved_domain:ucd.ie) OR (page_title:\"Dublin City University\" AND NOT resolved_domain:dcu.ie) OR (page_title:\"Technological University Dublin\" AND NOT resolved_domain:tudublin.ie) OR (page_title:\"University College Cork\" AND NOT resolved_domain:ucc.ie) OR (page_title:\"University of Galway\" AND NOT resolved_domain:universityofgalway.ie) OR (page_title:\"Maynooth University\" AND NOT resolved_domain:maynoothuniversity.ie) OR (page_title:\"University of Limerick\" AND NOT resolved_domain:ul.ie) OR (page_title:\"Munster Technological University\" AND NOT resolved_domain:mtu.ie) OR (page_title:\"South East Technological University\" AND NOT resolved_domain:setu.ie) OR (page_title:\"Royal College of Surgeons in Ireland\" AND NOT resolved_domain:rcsi.com) OR (page_title:\"National College of Ireland\" AND NOT resolved_domain:ncirl.ie) OR (page_title:\"Griffith College in Ireland\" AND NOT resolved_domain:griffith.ie) OR (page_title:\"Mary Immaculate College\" AND NOT resolved_domain:mic.ul.ie) OR (page_title:\"Marino Institute of Education\" AND NOT resolved_domain:mie.ie) OR (page_title:\"Institute of Art, Desgin and Technology\" AND NOT resolved_domain:iadt.ie) OR (page_title:\"National College of Art and Design\" AND NOT resolved_domain:ncad.ie))",
     "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -11,6 +13,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Trinity College Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:tcd.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -18,6 +22,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"University College Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ucd.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -25,6 +31,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Dublin City University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:dcu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -32,6 +40,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Technological University Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:tudublin.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -39,6 +49,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"University College Cork\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ucc.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -46,6 +58,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"University of Galway\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:universityofgalway.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -53,6 +67,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Maynooth University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:maynoothuniversity.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -60,6 +76,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"University of Limerick\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ul.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -67,6 +85,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Munster Technological University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mtu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -74,6 +94,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"South East Technological University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:setu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -81,6 +103,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Royal College of Surgeons in Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:rcsi.com)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -88,6 +112,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"National College of Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ncirl.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -95,6 +121,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Griffith College in Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:griffith.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -102,6 +130,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Mary Immaculate College\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mic.ul.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -109,6 +139,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Marino Institute of Education\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mie.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -116,6 +148,8 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"Institute of Art, Design and Technology\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:iadt.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
@@ -123,7 +157,18 @@
     "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
     "query": "(dom:\"National College of Art and Design\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ncad.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+  },
+  {
+    "name": "Irish Colleges - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Irish university domains",
+    "query": "domain:(tcd.ie OR ucd.ie OR dcu.ie OR tudublin.ie OR ucc.ie OR universityofgalway.ie OR maynoothuniversity.ie OR ul.ie OR mtu.ie OR setu.ie OR rcsi.com OR ncirl.ie OR griffith.ie OR mic.ul.ie OR mie.ie OR iadt.ie OR ncad.ie) OR username:(@tcd.ie OR @ucd.ie OR @dcu.ie OR @tudublin.ie OR @ucc.ie OR @universityofgalway.ie OR @maynoothuniversity.ie OR @ul.ie OR @mtu.ie OR @setu.ie OR @rcsi.com OR @ncirl.ie OR @griffith.ie OR @mic.ul.ie OR @mie.ie OR @iadt.ie OR @ncad.ie)",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer"]
   }
 ]
 

@@ -113,6 +113,8 @@ Each query in `queries.json` should have the following structure:
   "description": "Query description",
   "query": "lucene_query_string",
   "fields": ["field1", "field2", "field3"],
+  "index": "scans",
+  "size": 500,
   "tags": ["tag1", "tag2"]
 }
 ```
@@ -121,6 +123,8 @@ Each query in `queries.json` should have the following structure:
 - **description**: Description of what the query searches for
 - **query**: Lucene query string for Webamon search
 - **fields**: Array of field names to return from the Webamon API (comma-separated in URL)
+- **index**: Webamon index to search (e.g., "scans", "infostealers", "phishing")
+- **size**: Maximum number of results to return (default: 500)
 - **tags**: Array of MISP tags to apply to the event
 
 ## Retry Logic

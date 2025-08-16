@@ -104,9 +104,9 @@ def validate_config():
         exit(1)
 
 # ===== FUNCTIONS =====
-def fetch_webamon_data(query, fields=None):
+def fetch_webamon_data(query, fields=None, index="scans", size=500):
     headers = {"x-api-key": f"{WEBAMON_KEY}"}
-    params = {"lucene_query": query, "size": 500, "index": "scans"}
+    params = {"lucene_query": query, "size": size, "index": index}
     
     # Add fields parameter if provided
     if fields and isinstance(fields, list):
@@ -186,19 +186,41 @@ def add_attributes_to_event(misp, event, data, tags):
         if "resolved_url" in item:
             attributes_to_add.append(("url", item["resolved_url"]))
 
-        # New mappings
+        # New mappings for infostealer data
+        if "domain" in item:
+            attributes_to_add.append(("domain", item["domain"]))
+        if "username" in item:
+            attributes_to_add.append(("text", f"Username: {item['username']}"))
+
+        # Additional mappings
         if "report_id" in item:
             report_link = f"http://search.webamon.com/search/report_id={item['report_id']}"
             attributes_to_add.append(("text", f"Webamon Report ID: {item['report_id']}"))
             attributes_to_add.append(("link", report_link))
         if "page_title" in item:
             attributes_to_add.append(("text", f"Page Title: {item['page_title']}"))
+        if "ingest_date" in item:
+            attributes_to_add.append(("text", f"Ingest Date: {item['ingest_date']}"))
+        if "tag" in item:
+            attributes_to_add.append(("text", f"Tag: {item['tag']}"))
 
         for attr_type, attr_value in attributes_to_add:
             attr = MISPAttribute()
             attr.type = attr_type
             attr.value = attr_value
-            attr.category = "Network activity" if attr_type in ["domain", "ip-dst", "url"] else "External analysis"
+            
+            # Enhanced category logic for different attribute types
+            if attr_type in ["domain", "ip-dst", "url"]:
+                attr.category = "Network activity"
+            elif attr_type == "text" and "Username:" in attr_value:
+                attr.category = "External analysis"  # Username data from infostealers
+            elif attr_type == "text" and "Tag:" in attr_value:
+                attr.category = "External analysis"  # Tag data from infostealers
+            elif attr_type == "text" and "Ingest Date:" in attr_value:
+                attr.category = "External analysis"  # Timestamp data
+            else:
+                attr.category = "External analysis"
+            
             attr.to_ids = True
             for tag in tags:
                 attr.add_tag(tag)
@@ -324,7 +346,12 @@ if __name__ == "__main__":
                 else:
                     print(f"   📋 Requesting fields: {', '.join(fields)}")
             
-            results = fetch_webamon_data(q["query"], fields)
+            # Get index and size from query configuration
+            index = q.get("index", "scans")
+            size = q.get("size", 500)
+            print(f"   📊 Using index: {index}, size: {size}")
+            
+            results = fetch_webamon_data(q["query"], fields, index, size)
             if results:
                 create_or_update_event(
                     misp,
