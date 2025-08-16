@@ -162,13 +162,157 @@
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
-    "name": "Irish Colleges - Staff Infostealers",
-    "description": "Returns discovered infostealer activity targeting Irish university domains",
-    "query": "domain:(tcd.ie OR ucd.ie OR dcu.ie OR tudublin.ie OR ucc.ie OR universityofgalway.ie OR maynoothuniversity.ie OR ul.ie OR mtu.ie OR setu.ie OR rcsi.com OR ncirl.ie OR griffith.ie OR mic.ul.ie OR mie.ie OR iadt.ie OR ncad.ie) OR username:(@tcd.ie OR @ucd.ie OR @dcu.ie OR @tudublin.ie OR @ucc.ie OR @universityofgalway.ie OR @maynoothuniversity.ie OR @ul.ie OR @mtu.ie OR @setu.ie OR @rcsi.com OR @ncirl.ie OR @griffith.ie OR @mic.ul.ie OR @mie.ie OR @iadt.ie OR @ncad.ie)",
+    "name": "Trinity College Dublin - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Trinity College Dublin domain and staff",
+    "query": "domain:tcd.ie OR username:@tcd.ie",
     "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
     "index": "infostealers",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TCD"]
+  },
+  {
+    "name": "University College Dublin - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting University College Dublin domain and staff",
+    "query": "domain:ucd.ie OR username:@ucd.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UCD"]
+  },
+  {
+    "name": "Dublin City University - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Dublin City University domain and staff",
+    "query": "domain:dcu.ie OR username:@dcu.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:DCU"]
+  },
+  {
+    "name": "Technological University Dublin - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Technological University Dublin domain and staff",
+    "query": "domain:tudublin.ie OR username:@tudublin.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TUDublin"]
+  },
+  {
+    "name": "University College Cork - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting University College Cork domain and staff",
+    "query": "domain:ucc.ie OR username:@ucc.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UCC"]
+  },
+  {
+    "name": "University of Galway - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting University of Galway domain and staff",
+    "query": "domain:universityofgalway.ie OR username:@universityofgalway.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UGalway"]
+  },
+  {
+    "name": "Maynooth University - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Maynooth University domain and staff",
+    "query": "domain:maynoothuniversity.ie OR username:@maynoothuniversity.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Maynooth"]
+  },
+  {
+    "name": "University of Limerick - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting University of Limerick domain and staff",
+    "query": "domain:ul.ie OR username:@ul.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UL"]
+  },
+  {
+    "name": "Munster Technological University - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Munster Technological University domain and staff",
+    "query": "domain:mtu.ie OR username:@mtu.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:MTU"]
+  },
+  {
+    "name": "South East Technological University - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting South East Technological University domain and staff",
+    "query": "domain:setu.ie OR username:@setu.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:SETU"]
+  },
+  {
+    "name": "Royal College of Surgeons Ireland - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Royal College of Surgeons Ireland domain and staff",
+    "query": "domain:rcsi.com OR username:@rcsi.com",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:RCSI"]
+  },
+  {
+    "name": "National College of Ireland - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting National College of Ireland domain and staff",
+    "query": "domain:ncirl.ie OR username:@ncirl.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NCI"]
+  },
+  {
+    "name": "Griffith College - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Griffith College domain and staff",
+    "query": "domain:griffith.ie OR username:@griffith.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Griffith"]
+  },
+  {
+    "name": "Mary Immaculate College - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Mary Immaculate College domain and staff",
+    "query": "domain:mic.ul.ie OR username:@mic.ul.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:MIC"]
+  },
+  {
+    "name": "Marino Institute of Education - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Marino Institute of Education domain and staff",
+    "query": "domain:mie.ie OR username:@mie.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Marino"]
+  },
+  {
+    "name": "Institute of Art Design and Technology - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting Institute of Art Design and Technology domain and staff",
+    "query": "domain:iadt.ie OR username:@iadt.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:IADT"]
+  },
+  {
+    "name": "National College of Art and Design - Staff Infostealers",
+    "description": "Returns discovered infostealer activity targeting National College of Art and Design domain and staff",
+    "query": "domain:ncad.ie OR username:@ncad.ie",
+    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "index": "infostealers",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NCAD"]
   }
 ]
 
