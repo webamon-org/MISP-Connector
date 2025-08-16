@@ -33,6 +33,7 @@ This project provides scripts to connect Webamon security scanning results with 
    - `RETRY_DELAY`: Delay between retries in seconds (default: 1.0)
    - `VERIFY_CERT`: Whether to verify SSL certificates (default: False)
    - `QUERIES_FILE`: Path to queries configuration file (default: queries.json)
+   - `LOGS_DIR`: Directory for log files (default: logs)
    - `DEBUG_MODE`: Enable debug logging (default: False)
    - `VERBOSE_DUPLICATES`: Show detailed duplicate attribute messages (default: False)
    - `SUPPRESS_PYMISP_OUTPUT`: Suppress PyMISP library error output (default: True)
@@ -70,6 +71,38 @@ Example fields you can request:
 - **queries.json**: Define your search queries, associated tags, and fields to return
 - **.env**: Environment variables (not committed to git)
 - **.env.example**: Template for environment configuration
+
+### Logging
+
+The connector automatically logs all output to timestamped log files:
+
+- **Log Directory**: `logs/` (configurable via `LOGS_DIR`)
+- **Log File Format**: `misp_connector_YYYYMMDD_HHMMSS.log` (UTC timestamps)
+- **Complete Capture**: All stdout output is captured to log files
+- **Runtime Tracking**: Each log file includes start and completion timestamps in UTC
+- **Audit Trail**: Full record of all connector operations and results
+- **Timezone Consistency**: All timestamps use UTC for consistency across different timezones
+
+**Example Log File Structure:**
+```
+=== MISP Connector Log - Started at 2025-08-16 16:30:15 UTC ===
+🔍 Running query for: Irish Colleges - Website Page Title
+   📋 Requesting fields: resolved_domain, resolved_ip, resolved_url, report_id, page_title
+   🌐 API Request: https://pro.webamon.com/search?lucene_query=...
+   🆕 Creating new event: Webamon Import - Irish Colleges - Website Page Title (2025-08-16)
+   🔍 Processing 8 items for event 13
+   ℹ️  Duplicate attributes will be automatically skipped (this is normal)
+   ➕ Added 2 new attributes to event 13
+   ℹ️  Skipped 6 duplicate attributes (already exist in MISP)
+✅ MISP Connector completed successfully!
+=== MISP Connector Log - Completed at 2025-08-16 16:30:45 UTC ===
+```
+
+**Benefits:**
+- **Compliance**: Complete audit trail for security operations
+- **Debugging**: Historical record of all runs and errors
+- **Monitoring**: Track performance and success rates over time
+- **Backup**: Preserve output even if terminal is closed
 
 ### queries.json Structure
 
@@ -133,3 +166,20 @@ This feature ensures that duplicate attribute errors from the MISP API are handl
 - API keys are stored in `.env` files (excluded from git)
 - SSL certificate verification can be disabled for internal MISP instances
 - All sensitive configuration is externalized to environment variables
+
+## Project Structure
+
+```
+MISP-Connector/
+├── webamon_misp_connector.py    # Main connector script
+├── queries.json                 # Query configuration
+├── requirements.txt             # Python dependencies
+├── .env                        # Environment variables (not in git)
+├── .env.example                # Environment template
+├── .gitignore                  # Git ignore rules
+├── logs/                       # Log files directory
+│   ├── misp_connector_20250816_163015.log
+│   ├── misp_connector_20250816_164530.log
+│   └── ...
+└── README.md                   # This documentation
+```

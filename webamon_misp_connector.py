@@ -15,6 +15,55 @@ load_dotenv()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+# ===== LOGGING SETUP =====
+class TeeLogger:
+    """Custom logger that writes to both console and log file"""
+    
+    def __init__(self, log_dir="logs"):
+        self.log_dir = log_dir
+        self.terminal = sys.stdout
+        self.log_file = None
+        self.setup_log_file()
+    
+    def setup_log_file(self):
+        """Create log file with timestamp in logs directory"""
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+        
+        # Use UTC time for consistent log file naming across timezones
+        timestamp = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        log_filename = f"misp_connector_{timestamp}.log"
+        log_path = os.path.join(self.log_dir, log_filename)
+        
+        self.log_file = open(log_path, 'w', encoding='utf-8')
+        
+        # Write header to log file with UTC timestamp
+        header = f"=== MISP Connector Log - Started at {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC ===\n"
+        self.log_file.write(header)
+        self.log_file.flush()
+    
+    def write(self, message):
+        """Write to both terminal and log file"""
+        self.terminal.write(message)
+        if self.log_file:
+            self.log_file.write(message)
+            self.log_file.flush()
+    
+    def flush(self):
+        """Flush both terminal and log file"""
+        self.terminal.flush()
+        if self.log_file:
+            self.log_file.flush()
+    
+    def close(self):
+        """Close log file and restore stdout"""
+        if self.log_file:
+            footer = f"\n=== MISP Connector Log - Completed at {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC ===\n"
+            self.log_file.write(footer)
+            self.log_file.close()
+            sys.stdout = self.terminal
+
+
 # ===== MISP CONFIG =====
 MISP_URL = os.getenv("MISP_URL")
 MISP_KEY = os.getenv("MISP_KEY")
@@ -32,6 +81,11 @@ RETRY_COUNT = int(os.getenv("RETRY_COUNT", "2"))
 RETRY_DELAY = float(os.getenv("RETRY_DELAY", "1.0"))  # Delay between retries in seconds
 DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"  # Enable debug logging
 SUPPRESS_PYMISP_OUTPUT = os.getenv("SUPPRESS_PYMISP_OUTPUT", "True").lower() == "true"  # Suppress PyMISP library output
+LOGS_DIR = os.getenv("LOGS_DIR", "logs")  # Directory for log files
+
+# Initialize logging
+logger = TeeLogger(LOGS_DIR)
+sys.stdout = logger
 
 # Validate required environment variables
 def validate_config():
@@ -246,37 +300,50 @@ def create_or_update_event(misp, event_name, description, data, tags):
 
 # ===== MAIN =====
 if __name__ == "__main__":
-    validate_config()
+    try:
+        validate_config()
 
-    if not os.path.exists(QUERIES_FILE):
-        print(f"❌ Queries file not found: {QUERIES_FILE}")
-        exit(1)
+        if not os.path.exists(QUERIES_FILE):
+            print(f"❌ Queries file not found: {QUERIES_FILE}")
+            exit(1)
 
-    with open(QUERIES_FILE, "r") as f:
-        queries = json.load(f)
+        with open(QUERIES_FILE, "r") as f:
+            queries = json.load(f)
 
-    misp = PyMISP(MISP_URL, MISP_KEY, VERIFY_CERT)
+        misp = PyMISP(MISP_URL, MISP_KEY, VERIFY_CERT)
 
-    for q in queries:
-        print(f"🔍 Running query for: {q['name']}")
-        
-        # Validate fields parameter
-        fields = q.get("fields")
-        if fields:
-            if not isinstance(fields, list):
-                print(f"   ⚠️  Warning: 'fields' should be a list, got {type(fields).__name__}")
-                fields = None
+        for q in queries:
+            print(f"🔍 Running query for: {q['name']}")
+            
+            # Validate fields parameter
+            fields = q.get("fields")
+            if fields:
+                if not isinstance(fields, list):
+                    print(f"   ⚠️  Warning: 'fields' should be a list, got {type(fields).__name__}")
+                    fields = None
+                else:
+                    print(f"   📋 Requesting fields: {', '.join(fields)}")
+            
+            results = fetch_webamon_data(q["query"], fields)
+            if results:
+                create_or_update_event(
+                    misp,
+                    q["name"],
+                    q.get("description", ""),
+                    results,
+                    q.get("tags", [])
+                )
             else:
-                print(f"   📋 Requesting fields: {', '.join(fields)}")
+                print(f"⚠ No results for {q['name']}")
         
-        results = fetch_webamon_data(q["query"], fields)
-        if results:
-            create_or_update_event(
-                misp,
-                q["name"],
-                q.get("description", ""),
-                results,
-                q.get("tags", [])
-            )
-        else:
-            print(f"⚠ No results for {q['name']}")
+        print("✅ MISP Connector completed successfully!")
+        
+    except KeyboardInterrupt:
+        print("\n⚠️  MISP Connector interrupted by user")
+    except Exception as e:
+        print(f"❌ MISP Connector failed with error: {e}")
+        import traceback
+        traceback.print_exc()
+    finally:
+        # Always close the logger and restore stdout
+        logger.close()

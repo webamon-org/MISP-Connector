@@ -4,7 +4,7 @@
 # Python
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
 *.so
 .Python
 build/
@@ -29,10 +29,11 @@ MANIFEST
 venv/
 ENV/
 env/
+.env/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
@@ -40,3 +41,7 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+logs/
+*.log
