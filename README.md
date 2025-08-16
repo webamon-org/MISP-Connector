@@ -34,6 +34,8 @@ This project provides scripts to connect Webamon security scanning results with 
    - `VERIFY_CERT`: Whether to verify SSL certificates (default: False)
    - `QUERIES_FILE`: Path to queries configuration file (default: queries.json)
    - `DEBUG_MODE`: Enable debug logging (default: False)
+   - `VERBOSE_DUPLICATES`: Show detailed duplicate attribute messages (default: False)
+   - `SUPPRESS_PYMISP_OUTPUT`: Suppress PyMISP library error output (default: True)
 
 ## Usage
 
@@ -98,6 +100,33 @@ The scripts implement configurable retry logic:
 - Continues processing after max retries are exhausted
 - Detailed logging of retry attempts and failures
 - Graceful handling of duplicate attributes (no retries needed)
+
+### Duplicate Attribute Handling
+
+MISP automatically prevents duplicate attributes within the same event. The connector handles this gracefully:
+
+- **Automatic Detection**: Recognizes various forms of duplicate errors (403, "already exists", etc.)
+- **No Retries**: Duplicate attributes are skipped immediately (saves time and API calls)
+- **Clear Messaging**: Shows how many attributes were added vs. skipped
+- **Configurable Logging**: Control verbosity of duplicate messages via `VERBOSE_DUPLICATES`
+- **Library Output Control**: Suppress PyMISP library error messages via `SUPPRESS_PYMISP_OUTPUT`
+
+**Example Output:**
+```
+   🔍 Processing 5 items for event 123
+   ℹ️  Duplicate attributes will be automatically skipped (this is normal)
+   ➕ Added 2 new attributes to event 123
+   ℹ️  Skipped 3 duplicate attributes (already exist in MISP)
+```
+
+### PyMISP Output Suppression
+
+The `SUPPRESS_PYMISP_OUTPUT` setting controls whether PyMISP library error messages are displayed:
+
+- **`SUPPRESS_PYMISP_OUTPUT=True`** (default): Suppresses raw library error messages, showing only clean, formatted output
+- **`SUPPRESS_PYMISP_OUTPUT=False`**: Shows all PyMISP library output (useful for debugging)
+
+This feature ensures that duplicate attribute errors from the MISP API are handled gracefully without showing confusing raw error messages.
 
 ## Security Notes
 
