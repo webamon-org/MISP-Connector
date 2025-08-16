@@ -263,6 +263,15 @@ def add_attributes_to_event(misp, event, data, tags):
         if "username" in item:
             attributes_to_add.append(("text", f"Username: {item['username']}"))
 
+        # ULP (URL:Username:Password) record for infostealer data
+        if all(key in item for key in ["url", "username", "password"]):
+            ulp_value = f"{item['url']}:{item['username']}:{item['password']}"
+            attributes_to_add.append(("text", f"ULP Record: {ulp_value}"))
+        elif "url" in item and "username" in item:
+            # Partial ULP if password is missing
+            ulp_value = f"{item['url']}:{item['username']}:<no_password>"
+            attributes_to_add.append(("text", f"ULP Record: {ulp_value}"))
+
         # Additional mappings
         if "report_id" in item:
             report_link = f"http://search.webamon.com/search/report_id={item['report_id']}"
@@ -270,8 +279,6 @@ def add_attributes_to_event(misp, event, data, tags):
             attributes_to_add.append(("link", report_link))
         if "page_title" in item:
             attributes_to_add.append(("text", f"Page Title: {item['page_title']}"))
-        if "ingest_date" in item:
-            attributes_to_add.append(("text", f"Ingest Date: {item['ingest_date']}"))
         if "tag" in item:
             attributes_to_add.append(("text", f"Tag: {item['tag']}"))
 
@@ -285,6 +292,8 @@ def add_attributes_to_event(misp, event, data, tags):
             # Enhanced category logic for different attribute types
             if attr_type in ["domain", "ip-dst", "url"]:
                 attr.category = "Network activity"
+            elif attr_type == "text" and "ULP Record:" in attr_value:
+                attr.category = "External analysis"  # ULP records from infostealers
             elif attr_type == "text" and "Username:" in attr_value:
                 attr.category = "External analysis"  # Username data from infostealers
             elif attr_type == "text" and "Tag:" in attr_value:

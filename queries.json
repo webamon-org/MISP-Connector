@@ -9,163 +9,163 @@
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Trinity College Dublin - Possible Phishing",
+    "description": "Returns discovered websites which reference Trinity College Dublin in page titles and contain login-related keywords",
     "query": "(dom:\"Trinity College Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:tcd.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:TCD"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "University College Dublin - Possible Phishing",
+    "description": "Returns discovered websites which reference University College Dublin in page titles and contain login-related keywords",
     "query": "(dom:\"University College Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ucd.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:UCD"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Dublin City University - Possible Phishing",
+    "description": "Returns discovered websites which reference Dublin City University in page titles and contain login-related keywords",
     "query": "(dom:\"Dublin City University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:dcu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:DCU"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Technological University Dublin - Possible Phishing",
+    "description": "Returns discovered websites which reference Technological University Dublin in page titles and contain login-related keywords",
     "query": "(dom:\"Technological University Dublin\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:tudublin.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:TUDublin"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "University College Cork - Possible Phishing",
+    "description": "Returns discovered websites which reference University College Cork in page titles and contain login-related keywords",
     "query": "(dom:\"University College Cork\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ucc.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:UCC"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "University of Galway - Possible Phishing",
+    "description": "Returns discovered websites which reference University of Galway in page titles and contain login-related keywords",
     "query": "(dom:\"University of Galway\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:universityofgalway.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:UGalway"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Maynooth University - Possible Phishing",
+    "description": "Returns discovered websites which reference Maynooth University in page titles and contain login-related keywords",
     "query": "(dom:\"Maynooth University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:maynoothuniversity.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:Maynooth"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "University of Limerick - Possible Phishing",
+    "description": "Returns discovered websites which reference University of Limerick in page titles and contain login-related keywords",
     "query": "(dom:\"University of Limerick\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ul.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:UL"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Munster Technological University - Possible Phishing",
+    "description": "Returns discovered websites which reference Munster Technological University in page titles and contain login-related keywords",
     "query": "(dom:\"Munster Technological University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mtu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:MTU"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "South East Technological University - Possible Phishing",
+    "description": "Returns discovered websites which reference South East Technological University in page titles and contain login-related keywords",
     "query": "(dom:\"South East Technological University\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:setu.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:SETU"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
-    "query": "(dom:\"Royal College of Surgeons in Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:rcsi.com)",
+    "name": "Royal College of Surgeons Ireland - Possible Phishing",
+    "description": "Returns discovered websites which reference Royal College of Surgeons Ireland in page titles and contain login-related keywords",
+    "query": "(dom:\"Royal College of Surgeons Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:rcsi.com)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:RCSI"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "National College of Ireland - Possible Phishing",
+    "description": "Returns discovered websites which reference National College of Ireland in page titles and contain login-related keywords",
     "query": "(dom:\"National College of Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ncirl.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:NCI"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Griffith College - Possible Phishing",
+    "description": "Returns discovered websites which reference Griffith College in page titles and contain login-related keywords",
     "query": "(dom:\"Griffith College in Ireland\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:griffith.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:Griffith"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Mary Immaculate College - Possible Phishing",
+    "description": "Returns discovered websites which reference Mary Immaculate College in page titles and contain login-related keywords",
     "query": "(dom:\"Mary Immaculate College\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mic.ul.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:MIC"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Marino Institute of Education - Possible Phishing",
+    "description": "Returns discovered websites which reference Marino Institute of Education in page titles and contain login-related keywords",
     "query": "(dom:\"Marino Institute of Education\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:mie.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:Marino"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "Institute of Art Design and Technology - Possible Phishing",
+    "description": "Returns discovered websites which reference Institute of Art Design and Technology in page titles and contain login-related keywords",
     "query": "(dom:\"Institute of Art, Design and Technology\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:iadt.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:IADT"]
   },
   {
-    "name": "Irish Colleges - Possible Phishing",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
+    "name": "National College of Art and Design - Possible Phishing",
+    "description": "Returns discovered websites which reference National College of Art and Design in page titles and contain login-related keywords",
     "query": "(dom:\"National College of Art and Design\" AND (dom:login OR dom:studentid AND (dom:password OR dom:portal OR dom:signin)) AND NOT resolved_domain:ncad.ie)",
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:NCAD"]
   },
   {
     "name": "Trinity College Dublin - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Trinity College Dublin domain and staff",
     "query": "domain:tcd.ie OR username:@tcd.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url", "domain"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TCD"]
@@ -174,7 +174,7 @@
     "name": "University College Dublin - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting University College Dublin domain and staff",
     "query": "domain:ucd.ie OR username:@ucd.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url", "domain"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UCD"]
@@ -183,7 +183,7 @@
     "name": "Dublin City University - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Dublin City University domain and staff",
     "query": "domain:dcu.ie OR username:@dcu.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:DCU"]
@@ -192,7 +192,7 @@
     "name": "Technological University Dublin - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Technological University Dublin domain and staff",
     "query": "domain:tudublin.ie OR username:@tudublin.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TUDublin"]
@@ -201,7 +201,7 @@
     "name": "University College Cork - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting University College Cork domain and staff",
     "query": "domain:ucc.ie OR username:@ucc.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UCC"]
@@ -210,7 +210,7 @@
     "name": "University of Galway - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting University of Galway domain and staff",
     "query": "domain:universityofgalway.ie OR username:@universityofgalway.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UGalway"]
@@ -219,7 +219,7 @@
     "name": "Maynooth University - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Maynooth University domain and staff",
     "query": "domain:maynoothuniversity.ie OR username:@maynoothuniversity.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Maynooth"]
@@ -228,7 +228,7 @@
     "name": "University of Limerick - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting University of Limerick domain and staff",
     "query": "domain:ul.ie OR username:@ul.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UL"]
@@ -237,7 +237,7 @@
     "name": "Munster Technological University - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Munster Technological University domain and staff",
     "query": "domain:mtu.ie OR username:@mtu.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:MTU"]
@@ -246,7 +246,7 @@
     "name": "South East Technological University - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting South East Technological University domain and staff",
     "query": "domain:setu.ie OR username:@setu.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:SETU"]
@@ -255,7 +255,7 @@
     "name": "Royal College of Surgeons Ireland - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Royal College of Surgeons Ireland domain and staff",
     "query": "domain:rcsi.com OR username:@rcsi.com",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:RCSI"]
@@ -264,7 +264,7 @@
     "name": "National College of Ireland - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting National College of Ireland domain and staff",
     "query": "domain:ncirl.ie OR username:@ncirl.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NCI"]
@@ -273,7 +273,7 @@
     "name": "Griffith College - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Griffith College domain and staff",
     "query": "domain:griffith.ie OR username:@griffith.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Griffith"]
@@ -282,7 +282,7 @@
     "name": "Mary Immaculate College - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Mary Immaculate College domain and staff",
     "query": "domain:mic.ul.ie OR username:@mic.ul.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:MIC"]
@@ -291,7 +291,7 @@
     "name": "Marino Institute of Education - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Marino Institute of Education domain and staff",
     "query": "domain:mie.ie OR username:@mie.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:Marino"]
@@ -300,7 +300,7 @@
     "name": "Institute of Art Design and Technology - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting Institute of Art Design and Technology domain and staff",
     "query": "domain:iadt.ie OR username:@iadt.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:IADT"]
@@ -309,7 +309,7 @@
     "name": "National College of Art and Design - Staff Infostealers",
     "description": "Returns discovered infostealer activity targeting National College of Art and Design domain and staff",
     "query": "domain:ncad.ie OR username:@ncad.ie",
-    "fields": ["domain", "username", "ingest_date", "tag", "page_title"],
+    "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NCAD"]
