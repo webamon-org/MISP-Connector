@@ -35,7 +35,6 @@ This project provides scripts to connect Webamon security scanning results with 
    - `QUERIES_FILE`: Path to queries configuration file (default: queries.json)
    - `LOGS_DIR`: Directory for log files (default: logs)
    - `DEBUG_MODE`: Enable debug logging (default: False)
-   - `VERBOSE_DUPLICATES`: Show detailed duplicate attribute messages (default: False)
    - `SUPPRESS_PYMISP_OUTPUT`: Suppress PyMISP library error output (default: True)
 
 ## Usage
@@ -141,7 +140,6 @@ MISP automatically prevents duplicate attributes within the same event. The conn
 - **Automatic Detection**: Recognizes various forms of duplicate errors (403, "already exists", etc.)
 - **No Retries**: Duplicate attributes are skipped immediately (saves time and API calls)
 - **Clear Messaging**: Shows how many attributes were added vs. skipped
-- **Configurable Logging**: Control verbosity of duplicate messages via `VERBOSE_DUPLICATES`
 - **Library Output Control**: Suppress PyMISP library error messages via `SUPPRESS_PYMISP_OUTPUT`
 
 **Example Output:**
