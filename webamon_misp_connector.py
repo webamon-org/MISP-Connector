@@ -28,6 +28,7 @@ QUERIES_FILE = os.getenv("QUERIES_FILE", "queries.json")
 # ===== CONFIG =====
 RETRY_COUNT = int(os.getenv("RETRY_COUNT", "2"))
 RETRY_DELAY = float(os.getenv("RETRY_DELAY", "1.0"))  # Delay between retries in seconds
+DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"  # Enable debug logging
 
 # Validate required environment variables
 def validate_config():
@@ -46,9 +47,17 @@ def validate_config():
         exit(1)
 
 # ===== FUNCTIONS =====
-def fetch_webamon_data(query):
+def fetch_webamon_data(query, fields=None):
     headers = {"x-api-key": f"{WEBAMON_KEY}"}
     params = {"lucene_query": query, "size": 500, "index": "scans"}
+    
+    # Add fields parameter if provided
+    if fields and isinstance(fields, list):
+        params["fields"] = ",".join(fields)
+    
+    # Debug logging
+    if DEBUG_MODE:
+        print(f"   🌐 API Request: {WEBAMON_URL}?{'&'.join([f'{k}={v}' for k, v in params.items()])}")
     
     for attempt in range(RETRY_COUNT + 1):
         try:
@@ -217,7 +226,17 @@ if __name__ == "__main__":
 
     for q in queries:
         print(f"🔍 Running query for: {q['name']}")
-        results = fetch_webamon_data(q["query"])
+        
+        # Validate fields parameter
+        fields = q.get("fields")
+        if fields:
+            if not isinstance(fields, list):
+                print(f"   ⚠️  Warning: 'fields' should be a list, got {type(fields).__name__}")
+                fields = None
+            else:
+                print(f"   📋 Requesting fields: {', '.join(fields)}")
+        
+        results = fetch_webamon_data(q["query"], fields)
         if results:
             create_or_update_event(
                 misp,
