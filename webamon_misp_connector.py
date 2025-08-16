@@ -18,43 +18,43 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # ===== LOGGING SETUP =====
 class TeeLogger:
     """Custom logger that writes to both console and log file"""
-    
+
     def __init__(self, log_dir="logs"):
         self.log_dir = log_dir
         self.terminal = sys.stdout
         self.log_file = None
         self.setup_log_file()
-    
+
     def setup_log_file(self):
         """Create log file with timestamp in logs directory"""
         if not os.path.exists(self.log_dir):
             os.makedirs(self.log_dir)
-        
+
         # Use UTC time for consistent log file naming across timezones
         timestamp = datetime.datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         log_filename = f"misp_connector_{timestamp}.log"
         log_path = os.path.join(self.log_dir, log_filename)
-        
+
         self.log_file = open(log_path, 'w', encoding='utf-8')
-        
+
         # Write header to log file with UTC timestamp
         header = f"=== MISP Connector Log - Started at {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC ===\n"
         self.log_file.write(header)
         self.log_file.flush()
-    
+
     def write(self, message):
         """Write to both terminal and log file"""
         self.terminal.write(message)
         if self.log_file:
             self.log_file.write(message)
             self.log_file.flush()
-    
+
     def flush(self):
         """Flush both terminal and log file"""
         self.terminal.flush()
         if self.log_file:
             self.log_file.flush()
-    
+
     def close(self):
         """Close log file and restore stdout"""
         if self.log_file:
@@ -95,56 +95,122 @@ def validate_config():
         "WEBAMON_URL": WEBAMON_URL,
         "WEBAMON_KEY": WEBAMON_KEY
     }
-    
+
     missing_vars = [var for var, value in required_vars.items() if not value]
-    
+
     if missing_vars:
-        print(f"❌ Missing required environment variables: {', '.join(missing_vars)}")
+        print(f"ERROR: Missing required environment variables: {', '.join(missing_vars)}")
         print("Please check your .env file or set the required environment variables.")
         exit(1)
 
 # ===== FUNCTIONS =====
 def fetch_webamon_data(query, fields=None, index="scans", size=500):
     headers = {"x-api-key": f"{WEBAMON_KEY}"}
-    params = {"lucene_query": query, "size": size, "index": index}
-    
-    # Add fields parameter if provided
-    if fields and isinstance(fields, list):
-        params["fields"] = ",".join(fields)
-    
-    # Debug logging
-    if DEBUG_MODE:
-        print(f"   🌐 API Request: {WEBAMON_URL}?{'&'.join([f'{k}={v}' for k, v in params.items()])}")
-    
-    for attempt in range(RETRY_COUNT + 1):
-        try:
-            r = requests.get(
-                WEBAMON_URL, 
-                headers=headers, 
-                params=params
-            )
-            r.raise_for_status()
-            return r.json().get("results", [])
-        except requests.exceptions.Timeout:
-            if attempt < RETRY_COUNT:
-                print(f"   ⏰ Timeout on attempt {attempt + 1}/{RETRY_COUNT + 1}, retrying...")
-                continue
-            else:
-                print(f"   ❌ Final timeout after {RETRY_COUNT + 1} attempts")
-                return []
-        except requests.exceptions.RequestException as e:
-            if attempt < RETRY_COUNT:
-                print(f"   🔄 Request error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
-                time.sleep(RETRY_DELAY)  # Configurable delay before retry
-                continue
-            else:
-                print(f"   ❌ Final request error after {RETRY_COUNT + 1} attempts: {e}")
-                return []
-        except Exception as e:
-            print(f"   ❌ Unexpected error: {e}")
-            return []
-    
-    return []
+    all_results = []
+    current_from = 0
+    seen_items = set()  # Track unique items to prevent duplicates
+
+    while True:
+        params = {
+            "lucene_query": query,
+            "size": size,
+            "index": index,
+            "from": current_from
+        }
+
+        # Add fields parameter if provided
+        if fields and isinstance(fields, list):
+            params["fields"] = ",".join(fields)
+
+        # Debug logging
+        if DEBUG_MODE:
+            print(f"   DEBUG: API Request: {WEBAMON_URL}?{'&'.join([f'{k}={v}' for k, v in params.items()])}")
+
+        for attempt in range(RETRY_COUNT + 1):
+            try:
+                r = requests.get(
+                    WEBAMON_URL,
+                    headers=headers,
+                    params=params
+                )
+                r.raise_for_status()
+                response_data = r.json()
+
+                # Extract results from current page
+                current_results = response_data.get("results", [])
+
+                # Check for duplicates and add only unique items
+                new_items = []
+                for item in current_results:
+                    # Create a unique identifier for this item
+                    if "report_id" in item:
+                        item_id = f"{item['report_id']}_{item.get('domain', '')}_{item.get('username', '')}"
+                    elif "resolved_domain" in item:
+                        item_id = f"{item['resolved_domain']}_{item.get('resolved_ip', '')}_{item.get('resolved_url', '')}"
+                    else:
+                        # Fallback for other item types
+                        item_id = str(hash(str(item)))
+
+                    if item_id not in seen_items:
+                        seen_items.add(item_id)
+                        new_items.append(item)
+                    elif DEBUG_MODE:
+                        print(f"   WARN: Duplicate item detected and skipped: {item_id}")
+
+                all_results.extend(new_items)
+
+                if DEBUG_MODE:
+                    print(f"   DEBUG: Page results: {len(current_results)} total, {len(new_items)} new, {len(all_results)} cumulative")
+
+                # Check if pagination exists and if there are more pages
+                pagination = response_data.get("pagination")
+                if not pagination:
+                    # No pagination data, return current results
+                    if DEBUG_MODE:
+                        print(f"   INFO: No pagination data found, returning {len(all_results)} unique results")
+                    return all_results
+
+                # Check if there are more pages
+                if not pagination.get("has_more", False):
+                    if DEBUG_MODE:
+                        print(f"   INFO: Reached last page. Total unique results: {len(all_results)}")
+                    return all_results
+
+                # Move to next page
+                current_from = pagination.get("next_from", current_from + size)
+                if DEBUG_MODE:
+                    print(f"   DEBUG: Fetched page with {len(current_results)} results. Moving to next page (from: {current_from})")
+
+                # Small delay between requests to be respectful to the API
+                time.sleep(0.1)
+
+                break  # Success, move to next page
+
+            except requests.exceptions.Timeout:
+                if attempt < RETRY_COUNT:
+                    print(f"   WARN: Timeout on attempt {attempt + 1}/{RETRY_COUNT + 1}, retrying...")
+                    continue
+                else:
+                    print(f"   ERROR: Final timeout after {RETRY_COUNT + 1} attempts")
+                    return all_results
+            except requests.exceptions.RequestException as e:
+                if attempt < RETRY_COUNT:
+                    print(f"   WARN: Request error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
+                    time.sleep(RETRY_DELAY)  # Configurable delay before retry
+                    continue
+                else:
+                    print(f"   ERROR: Final request error after {RETRY_COUNT + 1} attempts: {e}")
+                    return all_results
+            except Exception as e:
+                print(f"   ERROR: Unexpected error: {e}")
+                return all_results
+
+        # Safety check to prevent infinite loops
+        if current_from >= 10000:  # Arbitrary limit to prevent infinite loops
+            print(f"   WARN: Safety limit reached (10,000 results), stopping pagination")
+            break
+
+    return all_results
 
 def find_existing_event(misp, event_title):
     for attempt in range(RETRY_COUNT + 1):
@@ -155,11 +221,11 @@ def find_existing_event(misp, event_title):
             return None
         except Exception as e:
             if attempt < RETRY_COUNT:
-                print(f"   🔄 MISP search error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
+                print(f"   WARN: MISP search error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
                 time.sleep(RETRY_DELAY)  # Configurable delay before retry
                 continue
             else:
-                print(f"   ❌ Final MISP search error after {RETRY_COUNT + 1} attempts: {e}")
+                print(f"   ERROR: Final MISP search error after {RETRY_COUNT + 1} attempts: {e}")
                 return None
     return None
 
@@ -171,9 +237,14 @@ def add_attributes_to_event(misp, event, data, tags):
 
     added_count = 0
     duplicate_count = 0
-    
-    print(f"   🔍 Processing {len(data)} items for event {event_id}")
-    print(f"   ℹ️  Duplicate attributes will be automatically skipped (this is normal)")
+    failed_count = 0
+    total_attributes_processed = 0
+
+    print(f"   INFO: Processing {len(data)} items for event {event_id}")
+    print(f"   INFO: Duplicate attributes will be automatically skipped (this is normal)")
+
+    # Track what we're actually creating
+    attribute_types_created = {}
 
     for item in data:
         attributes_to_add = []
@@ -204,11 +275,13 @@ def add_attributes_to_event(misp, event, data, tags):
         if "tag" in item:
             attributes_to_add.append(("text", f"Tag: {item['tag']}"))
 
+        total_attributes_processed += len(attributes_to_add)
+
         for attr_type, attr_value in attributes_to_add:
             attr = MISPAttribute()
             attr.type = attr_type
             attr.value = attr_value
-            
+
             # Enhanced category logic for different attribute types
             if attr_type in ["domain", "ip-dst", "url"]:
                 attr.category = "Network activity"
@@ -220,12 +293,13 @@ def add_attributes_to_event(misp, event, data, tags):
                 attr.category = "External analysis"  # Timestamp data
             else:
                 attr.category = "External analysis"
-            
+
             attr.to_ids = True
             for tag in tags:
                 attr.add_tag(tag)
-            
+
             # Add attribute with retry logic
+            attribute_added = False
             for attempt in range(RETRY_COUNT + 1):
                 try:
                     if SUPPRESS_PYMISP_OUTPUT:
@@ -233,55 +307,97 @@ def add_attributes_to_event(misp, event, data, tags):
                         old_stderr = sys.stderr
                         captured_stderr = io.StringIO()
                         sys.stderr = captured_stderr
-                        
+
                         try:
-                            misp.add_attribute(event_id, attr)
-                            added_count += 1
-                            break
+                            result = misp.add_attribute(event_id, attr)
+                            if result and hasattr(result, 'id'):
+                                added_count += 1
+                                attribute_added = True
+                                # Track attribute types for debugging
+                                if attr_type not in attribute_types_created:
+                                    attribute_types_created[attr_type] = 0
+                                attribute_types_created[attr_type] += 1
+                                break
+                            else:
+                                # Don't print individual warnings for duplicates - too verbose
+                                failed_count += 1
+                                break
                         finally:
                             # Restore stderr
                             sys.stderr = old_stderr
                             stderr_output = captured_stderr.getvalue()
                             captured_stderr.close()
-                            
+
                             # Check if the stderr output contains duplicate error messages
                             if stderr_output and any(phrase in stderr_output.lower() for phrase in [
-                                "already exists", 
+                                "already exists",
                                 "similar attribute already exists",
                                 "a similar attribute already exists for this event"
                             ]):
-                                print(f"   ℹ️  Attribute already exists in MISP: {attr_type}:{attr_value}")
                                 duplicate_count += 1
                                 break  # Don't retry for duplicates
                     else:
                         # Normal operation without stderr redirection
-                        misp.add_attribute(event_id, attr)
-                        added_count += 1
-                        break
-                        
+                        result = misp.add_attribute(event_id, attr)
+                        if result and hasattr(result, 'id'):
+                            added_count += 1
+                            attribute_added = True
+                            # Track attribute types for debugging
+                            if attr_type not in attribute_types_created:
+                                attribute_types_created[attr_type] = 0
+                            attribute_types_created[attr_type] += 1
+                            break
+                        else:
+                            # Don't print individual warnings for duplicates - too verbose
+                            failed_count += 1
+                            break
+
                 except Exception as e:
                     # Handle non-duplicate errors with retry logic
                     error_str = str(e)
-                    
+
                     if "validation" in error_str.lower() or "invalid" in error_str.lower():
-                        print(f"   ⚠️  Validation error for {attr_type}:{attr_value} - {e}")
+                        # Don't print individual validation errors - too verbose
+                        failed_count += 1
                         break  # Don't retry validation errors
                     elif attempt < RETRY_COUNT:
-                        print(f"   🔄 MISP add_attribute error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}")
+                        print(f"   WARN: MISP add_attribute error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}")
                         time.sleep(RETRY_DELAY)  # Configurable delay before retry
                         continue
                     else:
-                        print(f"   ❌ Final MISP add_attribute error after {RETRY_COUNT + 1} attempts: {e}")
+                        print(f"   ERROR: Final MISP add_attribute error after {RETRY_COUNT + 1} attempts: {e}")
+                        failed_count += 1
                         break
 
-    # Print summary with both added and duplicate counts
+            if not attribute_added and failed_count == 0:
+                # This shouldn't happen, but let's track it silently
+                pass
+
+    # Print detailed summary with debugging information
+    print(f"   INFO: ATTRIBUTE PROCESSING SUMMARY:")
+    print(f"      • Total items processed: {len(data)}")
+    print(f"      • Total attributes attempted: {total_attributes_processed}")
+    print(f"      • Successfully added: {added_count}")
+    print(f"      • Duplicates skipped: {duplicate_count}")
+    print(f"      • Failed to add: {failed_count}")
+
+    if attribute_types_created:
+        print(f"      • Attribute types created:")
+        for attr_type, count in attribute_types_created.items():
+            print(f"        - {attr_type}: {count}")
+
+    # Verify the count makes sense
+    expected_total = added_count + duplicate_count + failed_count
+    if expected_total != total_attributes_processed:
+        print(f"   WARN: COUNT MISMATCH: Expected {expected_total}, but processed {total_attributes_processed}")
+
     if duplicate_count > 0:
-        print(f"   ➕ Added {added_count} new attributes to event {event_id}")
-        print(f"   ℹ️  Skipped {duplicate_count} duplicate attributes (already exist in MISP)")
+        print(f"   SUCCESS: Added {added_count} new attributes to event {event_id}")
+        print(f"   INFO: Skipped {duplicate_count} duplicate attributes (already exist in MISP)")
         if added_count == 0:
-            print(f"   💡 All attributes were already present - no new data to add")
+            print(f"   INFO: All attributes were already present - no new data to add")
     else:
-        print(f"   ➕ Added {added_count} attributes to event {event_id}")
+        print(f"   SUCCESS: Added {added_count} attributes to event {event_id}")
 
 
 def create_or_update_event(misp, event_name, description, data, tags):
@@ -290,10 +406,10 @@ def create_or_update_event(misp, event_name, description, data, tags):
 
     existing_event = find_existing_event(misp, event_title)
     if existing_event:
-        print(f"♻ Updating existing event: {event_title}")
+        print(f"INFO: Updating existing event: {event_title}")
         add_attributes_to_event(misp, existing_event, data, tags)
     else:
-        print(f"🆕 Creating new event: {event_title}")
+        print(f"INFO: Creating new event: {event_title}")
         event = MISPEvent()
         event.info = event_title
         event.distribution = 0
@@ -301,7 +417,7 @@ def create_or_update_event(misp, event_name, description, data, tags):
         event.analysis = 0
         for tag in tags:
             event.add_tag(tag)
-        
+
         # Add the event to MISP with retry logic
         created_event = None
         for attempt in range(RETRY_COUNT + 1):
@@ -310,13 +426,13 @@ def create_or_update_event(misp, event_name, description, data, tags):
                 break
             except Exception as e:
                 if attempt < RETRY_COUNT:
-                    print(f"   🔄 MISP add_event error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
+                    print(f"   WARN: MISP add_event error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}, retrying...")
                     time.sleep(RETRY_DELAY)  # Configurable delay before retry
                     continue
                 else:
-                    print(f"   ❌ Final MISP add_event error after {RETRY_COUNT + 1} attempts: {e}")
+                    print(f"   ERROR: Final MISP add_event error after {RETRY_COUNT + 1} attempts: {e}")
                     return
-        
+
         if created_event:
             add_attributes_to_event(misp, created_event, data, tags)
 
@@ -326,7 +442,7 @@ if __name__ == "__main__":
         validate_config()
 
         if not os.path.exists(QUERIES_FILE):
-            print(f"❌ Queries file not found: {QUERIES_FILE}")
+            print(f"ERROR: Queries file not found: {QUERIES_FILE}")
             exit(1)
 
         with open(QUERIES_FILE, "r") as f:
@@ -335,22 +451,22 @@ if __name__ == "__main__":
         misp = PyMISP(MISP_URL, MISP_KEY, VERIFY_CERT)
 
         for q in queries:
-            print(f"🔍 Running query for: {q['name']}")
-            
+            print(f"INFO: Running query for: {q['name']}")
+
             # Validate fields parameter
             fields = q.get("fields")
             if fields:
                 if not isinstance(fields, list):
-                    print(f"   ⚠️  Warning: 'fields' should be a list, got {type(fields).__name__}")
+                    print(f"   WARN: 'fields' should be a list, got {type(fields).__name__}")
                     fields = None
                 else:
-                    print(f"   📋 Requesting fields: {', '.join(fields)}")
-            
+                    print(f"   INFO: Requesting fields: {', '.join(fields)}")
+
             # Get index and size from query configuration
             index = q.get("index", "scans")
             size = q.get("size", 500)
-            print(f"   📊 Using index: {index}, size: {size}")
-            
+            print(f"   INFO: Using index: {index}, size: {size}")
+
             results = fetch_webamon_data(q["query"], fields, index, size)
             if results:
                 create_or_update_event(
@@ -361,14 +477,14 @@ if __name__ == "__main__":
                     q.get("tags", [])
                 )
             else:
-                print(f"⚠ No results for {q['name']}")
-        
-        print("✅ MISP Connector completed successfully!")
-        
+                print(f"WARN: No results for {q['name']}")
+
+        print("SUCCESS: MISP Connector completed successfully!")
+
     except KeyboardInterrupt:
-        print("\n⚠️  MISP Connector interrupted by user")
+        print("\nWARN: MISP Connector interrupted by user")
     except Exception as e:
-        print(f"❌ MISP Connector failed with error: {e}")
+        print(f"ERROR: MISP Connector failed with error: {e}")
         import traceback
         traceback.print_exc()
     finally:
