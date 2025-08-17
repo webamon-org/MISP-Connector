@@ -80,7 +80,6 @@ QUERIES_FILE = os.getenv("QUERIES_FILE", "queries.json")
 RETRY_COUNT = int(os.getenv("RETRY_COUNT", "2"))
 RETRY_DELAY = float(os.getenv("RETRY_DELAY", "1.0"))  # Delay between retries in seconds
 DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"  # Enable debug logging
-SUPPRESS_PYMISP_OUTPUT = os.getenv("SUPPRESS_PYMISP_OUTPUT", "True").lower() == "true"  # Suppress PyMISP library output
 LOGS_DIR = os.getenv("LOGS_DIR", "logs")  # Directory for log files
 
 # Initialize logging
@@ -235,16 +234,7 @@ def add_attributes_to_event(misp, event, data, tags):
     if event_id is None:
         raise ValueError("Event does not have an ID. Ensure it is created in MISP first.")
 
-    added_count = 0
-    duplicate_count = 0
-    failed_count = 0
-    total_attributes_processed = 0
-
     print(f"   INFO: Processing {len(data)} items for event {event_id}")
-    print(f"   INFO: Duplicate attributes will be automatically skipped (this is normal)")
-
-    # Track what we're actually creating
-    attribute_types_created = {}
 
     for item in data:
         attributes_to_add = []
@@ -282,8 +272,6 @@ def add_attributes_to_event(misp, event, data, tags):
         if "tag" in item:
             attributes_to_add.append(("text", f"Tag: {item['tag']}"))
 
-        total_attributes_processed += len(attributes_to_add)
-
         for attr_type, attr_value in attributes_to_add:
             attr = MISPAttribute()
             attr.type = attr_type
@@ -308,105 +296,58 @@ def add_attributes_to_event(misp, event, data, tags):
                 attr.add_tag(tag)
 
             # Add attribute with retry logic
-            attribute_added = False
             for attempt in range(RETRY_COUNT + 1):
                 try:
-                    if SUPPRESS_PYMISP_OUTPUT:
-                        # Temporarily redirect stderr to capture PyMISP library output
-                        old_stderr = sys.stderr
-                        captured_stderr = io.StringIO()
-                        sys.stderr = captured_stderr
-
-                        try:
-                            result = misp.add_attribute(event_id, attr)
-                            if result and hasattr(result, 'id'):
-                                added_count += 1
-                                attribute_added = True
-                                # Track attribute types for debugging
-                                if attr_type not in attribute_types_created:
-                                    attribute_types_created[attr_type] = 0
-                                attribute_types_created[attr_type] += 1
-                                break
-                            else:
-                                # Don't print individual warnings for duplicates - too verbose
-                                failed_count += 1
-                                break
-                        finally:
-                            # Restore stderr
-                            sys.stderr = old_stderr
-                            stderr_output = captured_stderr.getvalue()
-                            captured_stderr.close()
-
-                            # Check if the stderr output contains duplicate error messages
-                            if stderr_output and any(phrase in stderr_output.lower() for phrase in [
-                                "already exists",
-                                "similar attribute already exists",
-                                "a similar attribute already exists for this event"
-                            ]):
-                                duplicate_count += 1
-                                break  # Don't retry for duplicates
-                    else:
-                        # Normal operation without stderr redirection
+                    # Temporarily redirect stdout/stderr to capture PyMISP library output
+                    old_stdout = sys.stdout
+                    old_stderr = sys.stderr
+                    captured_output = io.StringIO()
+                    sys.stdout = captured_output
+                    sys.stderr = captured_output
+                    
+                    try:
                         result = misp.add_attribute(event_id, attr)
                         if result and hasattr(result, 'id'):
-                            added_count += 1
-                            attribute_added = True
-                            # Track attribute types for debugging
-                            if attr_type not in attribute_types_created:
-                                attribute_types_created[attr_type] = 0
-                            attribute_types_created[attr_type] += 1
-                            break
+                            break  # Successfully added
                         else:
-                            # Don't print individual warnings for duplicates - too verbose
-                            failed_count += 1
-                            break
-
+                            break  # Attribute not added (likely duplicate)
+                    finally:
+                        # Restore stdout/stderr
+                        sys.stdout = old_stdout
+                        sys.stderr = old_stderr
+                        captured_text = captured_output.getvalue()
+                        captured_output.close()
+                        
+                        # Filter out 403 "already exists" error messages
+                        if captured_text:
+                            # Check if it contains the 403 duplicate error
+                            if "403" in captured_text and "already exists" in captured_text.lower():
+                                # This is a duplicate - silently ignore the error
+                                break
+                            elif captured_text.strip() and not any(phrase in captured_text.lower() for phrase in [
+                                "already exists", "similar attribute already exists"
+                            ]):
+                                # Only print non-duplicate related output
+                                print(f"   DEBUG: MISP output: {captured_text.strip()}")
                 except Exception as e:
-                    # Handle non-duplicate errors with retry logic
                     error_str = str(e)
-
-                    if "validation" in error_str.lower() or "invalid" in error_str.lower():
-                        # Don't print individual validation errors - too verbose
-                        failed_count += 1
-                        break  # Don't retry validation errors
+                    
+                    # Gracefully ignore duplicate attribute errors (403 with "already exists" messages)
+                    if "403" in error_str and "already exists" in error_str.lower():
+                        # This is a duplicate - silently ignore the error
+                        break
                     elif attempt < RETRY_COUNT:
                         print(f"   WARN: MISP add_attribute error on attempt {attempt + 1}/{RETRY_COUNT + 1}: {e}")
-                        time.sleep(RETRY_DELAY)  # Configurable delay before retry
+                        time.sleep(RETRY_DELAY)
                         continue
                     else:
                         print(f"   ERROR: Final MISP add_attribute error after {RETRY_COUNT + 1} attempts: {e}")
-                        failed_count += 1
                         break
+                
+                # Rate limiting: 1 second delay between API requests
+                time.sleep(1)
 
-            if not attribute_added and failed_count == 0:
-                # This shouldn't happen, but let's track it silently
-                pass
-
-    # Print detailed summary with debugging information
-    print(f"   INFO: ATTRIBUTE PROCESSING SUMMARY:")
-    print(f"      • Total items processed: {len(data)}")
-    print(f"      • Total attributes attempted: {total_attributes_processed}")
-    print(f"      • Successfully added: {added_count}")
-    print(f"      • Duplicates skipped: {duplicate_count}")
-    print(f"      • Failed to add: {failed_count}")
-
-    if attribute_types_created:
-        print(f"      • Attribute types created:")
-        for attr_type, count in attribute_types_created.items():
-            print(f"        - {attr_type}: {count}")
-
-    # Verify the count makes sense
-    expected_total = added_count + duplicate_count + failed_count
-    if expected_total != total_attributes_processed:
-        print(f"   WARN: COUNT MISMATCH: Expected {expected_total}, but processed {total_attributes_processed}")
-
-    if duplicate_count > 0:
-        print(f"   SUCCESS: Added {added_count} new attributes to event {event_id}")
-        print(f"   INFO: Skipped {duplicate_count} duplicate attributes (already exist in MISP)")
-        if added_count == 0:
-            print(f"   INFO: All attributes were already present - no new data to add")
-    else:
-        print(f"   SUCCESS: Added {added_count} attributes to event {event_id}")
+    print(f"   INFO: Completed processing {len(data)} items for event {event_id}")
 
 
 def create_or_update_event(misp, event_name, description, data, tags):

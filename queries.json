@@ -1,12 +1,156 @@
 [
   {
-    "name": "Irish Colleges - Website Page Title",
-    "description": "Returns discovered websites which reference Irish Colleges in the websites Page Title",
-    "query": "((page_title:\"Trinity College Dublin\" AND NOT resolved_domain:tcd.ie) OR (page_title:\"University College Dublin\" AND NOT resolved_domain:ucd.ie) OR (page_title:\"Dublin City University\" AND NOT resolved_domain:dcu.ie) OR (page_title:\"Technological University Dublin\" AND NOT resolved_domain:tudublin.ie) OR (page_title:\"University College Cork\" AND NOT resolved_domain:ucc.ie) OR (page_title:\"University of Galway\" AND NOT resolved_domain:universityofgalway.ie) OR (page_title:\"Maynooth University\" AND NOT resolved_domain:maynoothuniversity.ie) OR (page_title:\"University of Limerick\" AND NOT resolved_domain:ul.ie) OR (page_title:\"Munster Technological University\" AND NOT resolved_domain:mtu.ie) OR (page_title:\"South East Technological University\" AND NOT resolved_domain:setu.ie) OR (page_title:\"Royal College of Surgeons in Ireland\" AND NOT resolved_domain:rcsi.com) OR (page_title:\"National College of Ireland\" AND NOT resolved_domain:ncirl.ie) OR (page_title:\"Griffith College in Ireland\" AND NOT resolved_domain:griffith.ie) OR (page_title:\"Mary Immaculate College\" AND NOT resolved_domain:mic.ul.ie) OR (page_title:\"Marino Institute of Education\" AND NOT resolved_domain:mie.ie) OR (page_title:\"Institute of Art, Desgin and Technology\" AND NOT resolved_domain:iadt.ie) OR (page_title:\"National College of Art and Design\" AND NOT resolved_domain:ncad.ie))",
+    "name": "Trinity College Dublin - Website Page Title",
+    "description": "Returns discovered websites which reference Trinity College Dublin in page titles",
+    "query": "page_title:\"Trinity College Dublin\" AND NOT resolved_domain:tcd.ie",
     "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:TCD"]
+  },
+  {
+    "name": "University College Dublin - Website Page Title",
+    "description": "Returns discovered websites which reference University College Dublin in page titles",
+    "query": "page_title:\"University College Dublin\" AND NOT resolved_domain:ucd.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:UCD"]
+  },
+  {
+    "name": "Dublin City University - Website Page Title",
+    "description": "Returns discovered websites which reference Dublin City University in page titles",
+    "query": "page_title:\"Dublin City University\" AND NOT resolved_domain:dcu.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:DCU"]
+  },
+  {
+    "name": "Technological University Dublin - Website Page Title",
+    "description": "Returns discovered websites which reference Technological University Dublin in page titles",
+    "query": "page_title:\"Technological University Dublin\" AND NOT resolved_domain:tudublin.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:TUDublin"]
+  },
+  {
+    "name": "University College Cork - Website Page Title",
+    "description": "Returns discovered websites which reference University College Cork in page titles",
+    "query": "page_title:\"University College Cork\" AND NOT resolved_domain:ucc.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:UCC"]
+  },
+  {
+    "name": "University of Galway - Website Page Title",
+    "description": "Returns discovered websites which reference University of Galway in page titles",
+    "query": "page_title:\"University of Galway\" AND NOT resolved_domain:universityofgalway.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:UGalway"]
+  },
+  {
+    "name": "Maynooth University - Website Page Title",
+    "description": "Returns discovered websites which reference Maynooth University in page titles",
+    "query": "page_title:\"Maynooth University\" AND NOT resolved_domain:maynoothuniversity.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:Maynooth"]
+  },
+  {
+    "name": "University of Limerick - Website Page Title",
+    "description": "Returns discovered websites which reference University of Limerick in page titles",
+    "query": "page_title:\"University of Limerick\" AND NOT resolved_domain:ul.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:UL"]
+  },
+  {
+    "name": "Munster Technological University - Website Page Title",
+    "description": "Returns discovered websites which reference Munster Technological University in page titles",
+    "query": "page_title:\"Munster Technological University\" AND NOT resolved_domain:mtu.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:MTU"]
+  },
+  {
+    "name": "South East Technological University - Website Page Title",
+    "description": "Returns discovered websites which reference South East Technological University in page titles",
+    "query": "page_title:\"South East Technological University\" AND NOT resolved_domain:setu.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:SETU"]
+  },
+  {
+    "name": "Royal College of Surgeons in Ireland - Website Page Title",
+    "description": "Returns discovered websites which reference Royal College of Surgeons in Ireland in page titles",
+    "query": "page_title:\"Royal College of Surgeons in Ireland\" AND NOT resolved_domain:rcsi.com",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:RCSI"]
+  },
+  {
+    "name": "National College of Ireland - Website Page Title",
+    "description": "Returns discovered websites which reference National College of Ireland in page titles",
+    "query": "page_title:\"National College of Ireland\" AND NOT resolved_domain:ncirl.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:NCI"]
+  },
+  {
+    "name": "Griffith College in Ireland - Website Page Title",
+    "description": "Returns discovered websites which reference Griffith College in Ireland in page titles",
+    "query": "page_title:\"Griffith College in Ireland\" AND NOT resolved_domain:griffith.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:Griffith"]
+  },
+  {
+    "name": "Mary Immaculate College - Website Page Title",
+    "description": "Returns discovered websites which reference Mary Immaculate College in page titles",
+    "query": "page_title:\"Mary Immaculate College\" AND NOT resolved_domain:mic.ul.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:MIC"]
+  },
+  {
+    "name": "Marino Institute of Education - Website Page Title",
+    "description": "Returns discovered websites which reference Marino Institute of Education in page titles",
+    "query": "page_title:\"Marino Institute of Education\" AND NOT resolved_domain:mie.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:Marino"]
+  },
+  {
+    "name": "Institute of Art, Design and Technology - Website Page Title",
+    "description": "Returns discovered websites which reference Institute of Art, Design and Technology in page titles",
+    "query": "page_title:\"Institute of Art, Design and Technology\" AND NOT resolved_domain:iadt.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:IADT"]
+  },
+  {
+    "name": "National College of Art and Design - Website Page Title",
+    "description": "Returns discovered websites which reference National College of Art and Design in page titles",
+    "query": "page_title:\"National College of Art and Design\" AND NOT resolved_domain:ncad.ie",
+    "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
+    "index": "scans",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:NCAD"]
   },
   {
     "name": "Trinity College Dublin - Possible Phishing",
@@ -313,6 +457,159 @@
     "index": "infostealers",
     "size": 500,
     "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NCAD"]
+  },
+  {
+    "name": "Trinity College Dublin - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Trinity College Dublin naming patterns",
+    "query": "domain:tcd OR domain:trinitycollege OR domain:trinity-college OR domain:trinitycollegedublin OR domain:trinity-college-dublin",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:TCD"]
+  },
+  {
+    "name": "University College Dublin - Newly Registered Domains",
+    "description": "Returns newly registered domains that match University College Dublin naming patterns",
+    "query": "domain:ucd OR domain:universitycollegedublin OR domain:university-college-dublin OR domain:ucdublin",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:UCD"]
+  },
+  {
+    "name": "Dublin City University - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Dublin City University naming patterns",
+    "query": "domain:dcu OR domain:dublincityuniversity OR domain:dublin-city-university OR domain:dcudublin",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:DCU"]
+  },
+  {
+    "name": "Technological University Dublin - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Technological University Dublin naming patterns",
+    "query": "domain:tudublin OR domain:technologicaluniversitydublin OR domain:technological-university-dublin OR domain:tu-dublin",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:TUDublin"]
+  },
+  {
+    "name": "University College Cork - Newly Registered Domains",
+    "description": "Returns newly registered domains that match University College Cork naming patterns",
+    "query": "domain:ucc OR domain:universitycollegecork OR domain:university-college-cork OR domain:uccork",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:UCC"]
+  },
+  {
+    "name": "University of Galway - Newly Registered Domains",
+    "description": "Returns newly registered domains that match University of Galway naming patterns",
+    "query": "domain:nuig OR domain:universityofgalway OR domain:university-of-galway OR domain:galwayuniversity",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:UGalway"]
+  },
+  {
+    "name": "Maynooth University - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Maynooth University naming patterns",
+    "query": "domain:maynoothuniversity OR domain:maynooth-university OR domain:mu OR domain:maynoothu",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:Maynooth"]
+  },
+  {
+    "name": "University of Limerick - Newly Registered Domains",
+    "description": "Returns newly registered domains that match University of Limerick naming patterns",
+    "query": "domain:ul OR domain:universityoflimerick OR domain:university-of-limerick OR domain:limerickuniversity",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:UL"]
+  },
+  {
+    "name": "Munster Technological University - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Munster Technological University naming patterns",
+    "query": "domain:mtu OR domain:munstertechnologicaluniversity OR domain:munster-technological-university OR domain:mtu-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:MTU"]
+  },
+  {
+    "name": "South East Technological University - Newly Registered Domains",
+    "description": "Returns newly registered domains that match South East Technological University naming patterns",
+    "query": "domain:setu OR domain:southeasttechnologicaluniversity OR domain:south-east-technological-university OR domain:setu-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:SETU"]
+  },
+  {
+    "name": "Royal College of Surgeons Ireland - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Royal College of Surgeons Ireland naming patterns",
+    "query": "domain:rcsi OR domain:royalcollegeofsurgeons OR domain:royal-college-of-surgeons OR domain:rcsi-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:RCSI"]
+  },
+  {
+    "name": "National College of Ireland - Newly Registered Domains",
+    "description": "Returns newly registered domains that match National College of Ireland naming patterns",
+    "query": "domain:nci OR domain:nationalcollegeofireland OR domain:national-college-of-ireland OR domain:nci-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:NCI"]
+  },
+  {
+    "name": "Griffith College - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Griffith College naming patterns",
+    "query": "domain:griffithcollege OR domain:griffith-college OR domain:griffith-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:Griffith"]
+  },
+  {
+    "name": "Mary Immaculate College - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Mary Immaculate College naming patterns",
+    "query": "domain:mic OR domain:maryimmaculatecollege OR domain:mary-immaculate-college OR domain:mic-ul",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:MIC"]
+  },
+  {
+    "name": "Marino Institute of Education - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Marino Institute of Education naming patterns",
+    "query": "domain:marinoinstitute OR domain:marino-institute OR domain:marino-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:Marino"]
+  },
+  {
+    "name": "Institute of Art Design and Technology - Newly Registered Domains",
+    "description": "Returns newly registered domains that match Institute of Art Design and Technology naming patterns",
+    "query": "domain:iadt OR domain:instituteofartdesignandtechnology OR domain:institute-of-art-design-and-technology OR domain:iadt-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:IADT"]
+  },
+  {
+    "name": "National College of Art and Design - Newly Registered Domains",
+    "description": "Returns newly registered domains that match National College of Art and Design naming patterns",
+    "query": "domain:ncad OR domain:nationalcollegeofartanddesign OR domain:national-college-of-art-and-design OR domain:ncad-ie",
+    "fields": ["domain", "registration_date", "registrar", "nameservers"],
+    "index": "nrd_2025*",
+    "size": 500,
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:NCAD"]
   }
 ]
 
