@@ -33,7 +33,7 @@
     "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:TUDublin"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:TUD"]
   },
   {
     "name": "University College Cork - Website Page Title",
@@ -51,7 +51,7 @@
     "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:UGalway"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "institution:NUIG"]
   },
   {
     "name": "Maynooth University - Website Page Title",
@@ -186,7 +186,7 @@
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:TUDublin"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:TUD"]
   },
   {
     "name": "University College Cork - Possible Phishing",
@@ -204,7 +204,7 @@
     "fields": ["resolved_domain", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:UGalway"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:high", "source:OSINT", "threat:Phishing", "institution:NUIG"]
   },
   {
     "name": "Maynooth University - Possible Phishing",
@@ -339,7 +339,7 @@
     "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TUDublin"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:TUD"]
   },
   {
     "name": "University College Cork - Infostealers",
@@ -357,7 +357,7 @@
     "fields": ["username", "tag", "password", "url"],
     "index": "infostealers",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:UGalway"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:amber", "confidence:high", "source:OSINT", "threat:Infostealer", "institution:NUIG"]
   },
   {
     "name": "Maynooth University - Infostealers",
@@ -492,7 +492,7 @@
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:TUDublin"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:TUD"]
   },
   {
     "name": "University College Cork - Newly Registered Domains",
@@ -510,7 +510,7 @@
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
-    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:UGalway"]
+    "tags": ["source:Webamon", "sector:Education", "country:IE", "tlp:green", "confidence:medium", "source:OSINT", "threat:DomainSquatting", "institution:NUIG"]
   },
   {
     "name": "Maynooth University - Newly Registered Domains",
