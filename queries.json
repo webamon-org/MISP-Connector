@@ -2,7 +2,7 @@
   {
     "name": "Microsoft - Newly Registered Domains",
     "description": "Returns newly registered domains that match Microsoft naming patterns",
-    "query": "domain:microsoft OR domain:msft OR domain:office OR domain:outlook OR domain:hotmail OR domain:live OR domain:skype OR domain:teams OR domain:azure OR domain:onedrive",
+    "query": "domain:microsoft OR domain: OR domain: OR domain:outlook OR domain:hotmail OR domain: OR domain:skype OR domain: OR domain:azure OR domain:onedrive",
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
@@ -38,7 +38,7 @@
   {
     "name": "Revolut - Newly Registered Domains",
     "description": "Returns newly registered domains that match Revolut naming patterns",
-    "query": "domain:revolut OR domain:revolutbank OR domain:revolut-pay OR domain:revolutbanking OR domain:revolutapp",
+    "query": "domain:revolut OR domain:revolutbank OR domain:revolut*pay OR domain:revolutbanking OR domain:revolut*app",
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
@@ -47,7 +47,7 @@
   {
     "name": "Revolut - Website Page Title",
     "description": "Returns discovered websites which reference Revolut in page titles",
-    "query": "page_title:\"Revolut\" AND NOT resolved_domain:revolut.com",
+    "query": "page_title:\"Revolut\" AND NOT resolved_domain:revolut.*",
     "fields": ["resolved_domain", "resolved_ip", "resolved_url", "report_id", "page_title"],
     "index": "scans",
     "size": 500,
@@ -74,7 +74,7 @@
   {
     "name": "PayPal - Newly Registered Domains",
     "description": "Returns newly registered domains that match PayPal naming patterns",
-    "query": "domain:paypal OR domain:paypal-pay OR domain:paypalbank OR domain:paypalsecure OR domain:paypal-login OR domain:paypalverify",
+    "query": "domain:*pay*pal*",
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
