@@ -515,7 +515,7 @@
   {
     "name": "Maynooth University - Newly Registered Domains",
     "description": "Returns newly registered domains that match Maynooth University naming patterns",
-    "query": "domain:maynoothuniversity OR domain:maynooth*university OR domain:mu OR domain:maynoothu",
+    "query": "domain:maynoothuniversity OR domain:maynooth*university OR domain:maynoothu",
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,
