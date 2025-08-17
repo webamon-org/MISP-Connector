@@ -524,7 +524,7 @@
   {
     "name": "University of Limerick - Newly Registered Domains",
     "description": "Returns newly registered domains that match University of Limerick naming patterns",
-    "query": "domain:ul OR domain:universityoflimerick OR domain:university*of*limerick OR domain:limerickuniversity",
+    "query": "domain:universityoflimerick OR domain:university*of*limerick OR domain:limerickuniversity",
     "fields": ["domain", "date"],
     "index": "new_domains",
     "size": 500,

@@ -270,8 +270,18 @@ def add_attributes_to_event(misp, event, data, tags):
             attributes_to_add.append(("text", f"Page Title: {item['page_title']}"))
         if "tag" in item:
             attributes_to_add.append(("text", f"Tag: {item['tag']}"))
-        if "date" in item:
+        
+        # Special handling for newly registered domains - combine domain and date
+        if "domain" in item and "date" in item:
+            # Remove the separate domain and date attributes we added earlier
+            attributes_to_add = [attr for attr in attributes_to_add if not (attr[0] == "domain" and attr[1] == item["domain"])]
+            attributes_to_add = [attr for attr in attributes_to_add if not (attr[0] == "text" and "Registration Date:" in attr[1])]
+            # Add combined domain+date attribute
+            attributes_to_add.append(("text", f"New Domain: {item['domain']} (Registered: {item['date']})"))
+        elif "date" in item:
+            # If only date exists (without domain), keep the original logic
             attributes_to_add.append(("text", f"Registration Date: {item['date']}"))
+
         for attr_type, attr_value in attributes_to_add:
             attr = MISPAttribute()
             attr.type = attr_type
@@ -344,7 +354,7 @@ def add_attributes_to_event(misp, event, data, tags):
                         print(f"   ERROR: Final MISP add_attribute error after {RETRY_COUNT + 1} attempts: {e}")
                         break
                 
-                # Rate limiting: 1 second delay between API requests
+                # Rate limiting: 1-second delay between API requests
                 time.sleep(1)
 
     print(f"   INFO: Completed processing {len(data)} items for event {event_id}")
