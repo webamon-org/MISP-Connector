@@ -265,13 +265,13 @@ def add_attributes_to_event(misp, event, data, tags):
         # Additional mappings
         if "report_id" in item:
             report_link = f"http://search.webamon.com/search/report_id={item['report_id']}"
-            attributes_to_add.append(("text", f"Webamon Report ID: {item['report_id']}"))
             attributes_to_add.append(("link", report_link))
         if "page_title" in item:
             attributes_to_add.append(("text", f"Page Title: {item['page_title']}"))
         if "tag" in item:
             attributes_to_add.append(("text", f"Tag: {item['tag']}"))
-
+        if "date" in item:
+            attributes_to_add.append(("text", f"Registration Date: {item['date']}"))
         for attr_type, attr_value in attributes_to_add:
             attr = MISPAttribute()
             attr.type = attr_type
